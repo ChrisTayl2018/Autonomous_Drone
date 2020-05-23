@@ -42,7 +42,7 @@ class SonarArray():
         self.pub_array = [] # initialize empty publisher array
         self.num_sonar = num_sonar
 
-        delta_angle_deg = (angle_max_deg - angle_min_deg/float(num_sonar))
+        delta_angle_deg = (angle_max_deg - angle_min_deg)/float(num_sonar)
 
 
         rospy.loginfo("Initializing the arrays")
@@ -89,7 +89,7 @@ class SonarArray():
         # Set the control rate in ros
         rate = rospy.Rate(10)
 
-        rospy.loginfo("Running....")
+        rospy.loginfo("Running...")
         while not rospy.is_shutdown():
             self.scan()
             rate.sleep()
@@ -99,16 +99,17 @@ class SonarArray():
 
 if __name__ == "__main__":
 
-    rospy.loginfo("Setting up the Sonar Node...")
+    rospy.loginfo("Setting Up the Sonar Node...")
 
     rospy.init_node('sonar_array')
+        
+    sonar_array     = SonarArray(num_sonar          = NUM_SONAR,
+                                 gpio_trigger_list  = [SONAR_CENTER_GPIO_TRIGGER],
+                                 gpio_echo_list     = [SONAR_CENTER_GPIO_ECHO],
+                                 range_min          = 0.2,
+                                 range_max          = 3.5,
+                                 angle_min_deg      = -30,
+                                 angle_max_deg      = 30
+                                    )
+    sonar_array.run() 
 
-    sonar_array = SonarArray(num_sonar= NUM_SONAR,
-                            gpio_trigger_list = [SONAR_CENTER_GPIO_TRIGGER],
-                            gpio_echo_list = [SONAR_CENTER_GPIO_ECHO],
-                            range_min = 0.2,
-                            range_max = 3.5,
-                            angle_min_deg = -30,
-                            angle_max_deg = 30
-                            )
-    sonar_array.run()

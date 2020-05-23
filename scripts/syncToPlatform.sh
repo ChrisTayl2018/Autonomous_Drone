@@ -1,15 +1,15 @@
 #!/bin/bash
 
+# Script developed by Chris Taylor
 
-#Test pub sub project 
-rsync -avz /home/robo1/catkin_ws/src/test_pub_sub dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/
+# This script is simple script to sync all software between the development environment and the target environment 
 
-#Sonar project 
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/functional_test dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/src dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/launch dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/include dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/package.xml dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
-rsync -avz /home/robo1/catkin_ws/src/hawkeye_sonar/CMakeLists.txt dronobuntu_1604@192.168.0.61:/home/dronobuntu_1604/catkin_ws/src/hawkeye_sonar
+# IP Address of the target ECU (on-board drone raspberry pi in this project) 
+DRONE_IP='192.168.0.61'
+# Target user name of the ECU 
+DRONE_USER='dronobuntu_1604'
 
+TARGET=$DRONE_USER@$DRONE_IP:/home/$DRONE_USER/catkin_ws/src
 
+# List of directories/files that need to be synced to the target
+rsync -avz /home/$USER/catkin_ws/src/hawkeye_sonar $TARGET

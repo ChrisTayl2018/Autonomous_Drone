@@ -7,6 +7,10 @@ class Sonar():
 
     def __init__(self, gpio_trigger, gpio_echo, range_min=10, range_max=400):
 
+        # Ignore the warnings about the channel already being in use
+       
+        GPIO.setwarnings(False)
+
         GPIO.setmode(GPIO.BCM)
 
         self._gpio_trigger = gpio_trigger
@@ -24,6 +28,7 @@ class Sonar():
 
         GPIO.setup(gpio_trigger, GPIO.OUT)
         GPIO.setup(gpio_echo, GPIO.IN)
+
 
         # Waiting for sensor to settle
 
@@ -44,6 +49,11 @@ class Sonar():
         pulse_start_time = time.time()
         pulse_end_time = time.time()
 
+        while GPIO.input(self._gpio_echo)==0:
+            pulse_start_time = time.time()
+            
+        time0= time.time()
+		
         while GPIO.input(self._gpio_echo) ==1:
             pulse_end_time = time.time()
 
@@ -55,13 +65,15 @@ class Sonar():
         pulse_duration = pulse_end_time - pulse_start_time
         distance = pulse_duration * self._speed_sound
 
+        if distance > self._range_max:
+            distance = self._range_max
         if distance < self._range_min:
             distance = self._range_min
 
-        return distance
+        return(distance)
 
     @property
-    def is_Reading(self):
+    def is_reading(self):
         return(self._is_reading)
 
 
@@ -71,7 +83,6 @@ if __name__ =="__main__":
 
     sonar = Sonar(PIN_TRIGGER, PIN_ECHO)
 
-    while true:
+    while True:
         d= sonar.get_range()
-        if d > 0:
-            print("Distance= %4.1f cm" %d)
+        if d>0: print "Distance = %4.1f cm"%d
