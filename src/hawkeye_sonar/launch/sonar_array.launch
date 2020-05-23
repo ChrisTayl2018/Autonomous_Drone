@@ -1,6 +1,5 @@
 <launch> 
-
-<node pkg="hawkeye_sonar" name="hawk_sonar" type="sonar_array.py" output="screen"> 
-</node>
+<!-- Ultrasonic sensor ROS node launch -->
+<node pkg="hawkeye_sonar" name="hawk_sonar" type="sonar_array.py" output="screen"></node>
 
 </launch> 

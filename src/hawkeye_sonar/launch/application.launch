@@ -1,0 +1,13 @@
+<launch> 
+
+<!-- Ultrasonic Sensor Node launch-->
+<node pkg="hawkeye_sonar" name="hawkeye_sonar" type="sonar_array.py" output="screen" /> 
+
+<!-- Raspicam Node launch --> 
+<include file="/home/dronobuntu_1604/catkin_ws/src/raspicam_node/launch/camerav2_410x308_30fps.launch" />
+
+<!-- Mavros Node launch -->
+<include file="/opt/ros/kinetic/share/mavros/launch/px4.launch" />
+
+</launch> 
+
